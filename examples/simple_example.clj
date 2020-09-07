@@ -1,5 +1,5 @@
 (ns simple-example
-  (:require [nl.epij.option-vesting-recipe :as option-vesting-recipe]
+  (:require [nl.epij.option-vesting-recipe :refer [vesting-schedule->journal]]
             [nl.epij.option-vesting-recipe.grant :as grant]
             [nl.epij.option-vesting-recipe.period :as period]
             [com.clojournal.alpha.api :as c.api]))
@@ -29,6 +29,6 @@
     ::period/options-vested 25}])
 
 (-> vesting-schedule
-    option-vesting-recipe/vesting-schedule->journal
+    vesting-schedule->journal
     c.api/journal
     println)
