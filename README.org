@@ -1,0 +1,99 @@
+* clojournal/option-vesting-recipe
+
+#+BEGIN_SRC bash :results raw :exports results
+echo \#+BEGIN_EXAMPLE clojure
+cat examples/simple.clj
+echo \#+END_EXAMPLE
+#+END_SRC
+
+#+NAME: example-code
+#+RESULTS:
+#+BEGIN_EXAMPLE clojure
+(ns simple
+  (:require [com.clojournal.option-vesting-recipe :as option-vesting-recipe]
+            [com.clojournal.option-vesting-recipe.grant :as grant]
+            [com.clojournal.option-vesting-recipe.period :as period]
+            [com.clojournal.alpha.api :as c.api]))
+
+(def vesting-schedule
+  "Transform your vesting schedule (for example, from Carta) into a data structure like this one"
+  [{::period/grant          {::grant/id               "PL-1337"
+                             ::grant/price            "R$ 1.5608"
+                             ::grant/cliff            "P1Y"
+                             ::grant/issued-by        "Example Inc."
+                             ::grant/underlying-asset "EXPL"}
+    ::period/number         "1"
+    ::period/status         ::period/exercised
+    ::period/id             "PL-1337/1"
+    ::period/date           "2017-12-15"
+    ::period/options-vested 5000}
+
+   {::period/grant          {::grant/id               "PL-1337"
+                             ::grant/price            "R$ 1.5608"
+                             ::grant/cliff            "P1Y"
+                             ::grant/issued-by        "Example Inc."
+                             ::grant/underlying-asset "EXPL"}
+    ::period/number         "2"
+    ::period/status         ::period/exercised
+    ::period/id             "PL-1337/2"
+    ::period/date           "2017-12-17"
+    ::period/options-vested 25}])
+
+(-> vesting-schedule
+    option-vesting-recipe/vesting-schedule->journal
+    c.api/journal
+    println)
+#+END_EXAMPLE
+
+#+BEGIN_SRC bash :var example_code=example-code :results verbatim :exports both
+echo $example_code | bb --classpath "$(clojure -A:examples -Spath)" --file /dev/stdin
+#+END_SRC
+
+#+NAME: example-ledger
+#+RESULTS:
+#+begin_example
+
+
+2016-12-15 * (PL-1337) Example Inc.
+  (Off-Balance:Unvested Options:PL-1337)  EXPL 5025
+  (Off-Balance:Unexercised Options:PL-1337)  EXPL 5025
+
+2017-12-15 * (PL-1337/1) Example Inc.
+  (Off-Balance:Unvested Options:PL-1337)  EXPL -5000
+  Assets:Options  5000 "PL-1337" {R$ 1.5608}
+  Income  -5000 "PL-1337" {R$ 1.5608}
+  [Unrealized:Equity:Capital Requirement]  5000 "PL-1337" @ R$ 1.5608
+  [Unrealized:Liabilities:Exercise Provision]  -5000 "PL-1337" @ R$ 1.5608
+  [Unrealized:Assets:PL-1337]  EXPL 5000
+  [Equity:Capital Gains Provision:PL-1337]  EXPL -5000
+
+2017-12-17 * (PL-1337/2) Example Inc.
+  (Off-Balance:Unvested Options:PL-1337)  EXPL -25
+  Assets:Options  25 "PL-1337" {R$ 1.5608}
+  Income  -25 "PL-1337" {R$ 1.5608}
+  [Unrealized:Equity:Capital Requirement]  25 "PL-1337" @ R$ 1.5608
+  [Unrealized:Liabilities:Exercise Provision]  -25 "PL-1337" @ R$ 1.5608
+  [Unrealized:Assets:PL-1337]  EXPL 25
+  [Equity:Capital Gains Provision:PL-1337]  EXPL -25
+
+#+end_example
+
+#+BEGIN_SRC bash :var example_ledger=example-ledger :results verbatim :exports both
+ledger --file - balance <<EOF
+$example_ledger
+EOF
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+        5025 PL-1337  Assets:Options
+          EXPL -5025  Equity:Capital Gains Provision:PL-1337
+       -5025 PL-1337  Income
+           EXPL 5025  Off-Balance:Unexercised Options:PL-1337
+           EXPL 5025  Unrealized
+           EXPL 5025    Assets:PL-1337
+        5025 PL-1337    Equity:Capital Requirement
+       -5025 PL-1337    Liabilities:Exercise Provision
+--------------------
+           EXPL 5025
+#+end_example
