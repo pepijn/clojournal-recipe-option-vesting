@@ -1,4 +1,5 @@
-* option-vesting-recipe
+* option-vesting-recipe [[https://circleci.com/gh/pepijn/option-vesting-recipe.svg?style=svg]]
+
 
 #+BEGIN_SRC bash :results raw :exports results
 echo \#+BEGIN_EXAMPLE clojure
