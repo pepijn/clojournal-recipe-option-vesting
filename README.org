@@ -1,4 +1,4 @@
-* option-vesting-recipe [[https://circleci.com/gh/pepijn/option-vesting-recipe.svg?style=svg]]
+* clojournal-option-vesting-recipe [[https://circleci.com/gh/pepijn/clojournal-option-vesting-recipe.svg?style=svg]]
 
 Prevent mistakes, save time, and gain insights by keeping track of your option vesting administration using proper tools.
 The recipe in this repository turns your vesting schedule into a [[https://github.com/clojournal/clojournal][Clojournal]] collection.
