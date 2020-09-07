@@ -1,7 +1,7 @@
-(ns com.clojournal.option-vesting-recipe
+(ns nl.epij.option-vesting-recipe
   (:require [clojure.edn :as edn]
-            [com.clojournal.option-vesting-recipe.grant :as grant]
-            [com.clojournal.option-vesting-recipe.period :as period]
+            [nl.epij.option-vesting-recipe.grant :as grant]
+            [nl.epij.option-vesting-recipe.period :as period]
             [com.clojournal.alpha :as clojournal]
             [com.clojournal.alpha.api :as c.api]
             [com.clojournal.alpha.virtual :as virtual])

@@ -1,8 +1,8 @@
-(ns com.clojournal.option-vesting-recipe-test
+(ns nl.epij.option-vesting-recipe-test
   (:require [clojure.test :refer :all]
-            [com.clojournal.option-vesting-recipe :refer [vesting-schedule->journal]]
-            [com.clojournal.option-vesting-recipe.grant :as grant]
-            [com.clojournal.option-vesting-recipe.period :as period]
+            [nl.epij.option-vesting-recipe :refer [vesting-schedule->journal]]
+            [nl.epij.option-vesting-recipe.grant :as grant]
+            [nl.epij.option-vesting-recipe.period :as period]
             [com.clojournal.alpha :as clojournal]
             [com.clojournal.alpha.virtual :as virtual]))
 

@@ -1,7 +1,7 @@
 (ns simple
-  (:require [com.clojournal.option-vesting-recipe :as option-vesting-recipe]
-            [com.clojournal.option-vesting-recipe.grant :as grant]
-            [com.clojournal.option-vesting-recipe.period :as period]
+  (:require [nl.epij.option-vesting-recipe :as option-vesting-recipe]
+            [nl.epij.option-vesting-recipe.grant :as grant]
+            [nl.epij.option-vesting-recipe.period :as period]
             [com.clojournal.alpha.api :as c.api]))
 
 (def vesting-schedule
