@@ -57,7 +57,7 @@ echo \#+END_EXAMPLE
 We pipe this code into [[https://github.com/borkdude/babashka][babashka]] and get a plain text accounting journal.
 
 #+BEGIN_SRC bash :var example_code=example-code :results verbatim :exports both
-bb --classpath "$(clojure -A:examples -Spath)" --file /dev/stdin <<EOF
+bb --classpath "$(clojure -Spath)" --file /dev/stdin <<EOF
 $example_code
 EOF
 #+END_SRC
