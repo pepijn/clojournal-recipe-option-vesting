@@ -1,4 +1,4 @@
-* clojournal/option-vesting-recipe
+* option-vesting-recipe
 
 #+BEGIN_SRC bash :results raw :exports results
 echo \#+BEGIN_EXAMPLE clojure
