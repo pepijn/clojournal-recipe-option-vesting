@@ -1,4 +1,4 @@
-(ns simple
+(ns simple-example
   (:require [nl.epij.option-vesting-recipe :as option-vesting-recipe]
             [nl.epij.option-vesting-recipe.grant :as grant]
             [nl.epij.option-vesting-recipe.period :as period]

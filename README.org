@@ -1,16 +1,24 @@
 * option-vesting-recipe [[https://circleci.com/gh/pepijn/option-vesting-recipe.svg?style=svg]]
 
+Prevent mistakes, save time, and gain insights by keeping track of your option vesting administration using proper tools.
+The recipe in this repository turns your vesting schedule into a [[https://github.com/clojournal/clojournal][Clojournal]] collection.
+That enables analysis through [[https://plaintextaccounting.org/][plain text accounting tools]] like [[https://www.ledger-cli.org/][ledger]].
+The only thing you have to do is to transform your schedule, which you can get using tools like [[https://www.carta.com][Carta]], into a data structure like in the example below.
+
+** Example
+
+Consider the example vesting schedule in the code below (also available in the ~examples/~ directory of this repository).
 
 #+BEGIN_SRC bash :results raw :exports results
 echo \#+BEGIN_EXAMPLE clojure
-cat examples/simple.clj
+cat examples/simple_example.clj
 echo \#+END_EXAMPLE
 #+END_SRC
 
 #+NAME: example-code
 #+RESULTS:
 #+BEGIN_EXAMPLE clojure
-(ns simple
+(ns simple-example
   (:require [nl.epij.option-vesting-recipe :as option-vesting-recipe]
             [nl.epij.option-vesting-recipe.grant :as grant]
             [nl.epij.option-vesting-recipe.period :as period]
@@ -45,6 +53,8 @@ echo \#+END_EXAMPLE
     c.api/journal
     println)
 #+END_EXAMPLE
+
+When we pipe this code into [[https://github.com/borkdude/babashka][babashka]] and get a plain text accounting journal.
 
 #+BEGIN_SRC bash :var example_code=example-code :results verbatim :exports both
 bb --classpath "$(clojure -A:examples -Spath)" --file /dev/stdin <<EOF
@@ -81,8 +91,8 @@ EOF
 
 #+end_example
 
-#+NAME: example-ledger
-#+RESULTS:
+With the ledger at hand, we can do arbitrary queries using ledger. 
+Below, we query a simple balance sheet.
 
 #+BEGIN_SRC bash :var example_ledger=example-ledger :results verbatim :exports both
 ledger --file - balance <<EOF
@@ -103,3 +113,10 @@ EOF
 --------------------
            EXPL 5025
 #+end_example
+
+Now, try a register query, check lot prices, include this journal into other journals, add valuations through price DBs, and exchange the unrealized gains to fiat currencies.
+
+** Contributing
+
+I'm not an accountant so take the book account decisions with a grain of salt! 
+That said, I'd love to see PRs where you challenge these decisions.
