@@ -19,9 +19,9 @@ echo \#+END_EXAMPLE
 #+RESULTS:
 #+BEGIN_EXAMPLE clojure
 (ns simple-example
-  (:require [nl.epij.option-vesting-recipe :refer [vesting-schedule->journal]]
-            [nl.epij.option-vesting-recipe.grant :as grant]
-            [nl.epij.option-vesting-recipe.period :as period]
+  (:require [nl.epij.clojournal-recipe.option-vesting :refer [vesting-schedule->journal]]
+            [nl.epij.clojournal-recipe.option-vesting.grant :as grant]
+            [nl.epij.clojournal-recipe.option-vesting.period :as period]
             [com.clojournal.alpha.api :as c.api]))
 
 (def vesting-schedule
