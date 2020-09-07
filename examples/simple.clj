@@ -7,8 +7,8 @@
 (def vesting-schedule
   "Transform your vesting schedule (for example, from Carta) into a data structure like this one"
   [{::period/grant          {::grant/id               "PL-1337"
-                             ::grant/price            "R$ 1.5608"
-                             ::grant/cliff            "P1Y"
+                             ::grant/price            "R$ 3.42"
+                             ::grant/cliff            "P1Y" ;; 1 year
                              ::grant/issued-by        "Example Inc."
                              ::grant/underlying-asset "EXPL"}
     ::period/number         "1"
@@ -18,7 +18,7 @@
     ::period/options-vested 5000}
 
    {::period/grant          {::grant/id               "PL-1337"
-                             ::grant/price            "R$ 1.5608"
+                             ::grant/price            "R$ 3.42"
                              ::grant/cliff            "P1Y"
                              ::grant/issued-by        "Example Inc."
                              ::grant/underlying-asset "EXPL"}

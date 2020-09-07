@@ -18,8 +18,8 @@ echo \#+END_EXAMPLE
 (def vesting-schedule
   "Transform your vesting schedule (for example, from Carta) into a data structure like this one"
   [{::period/grant          {::grant/id               "PL-1337"
-                             ::grant/price            "R$ 1.5608"
-                             ::grant/cliff            "P1Y"
+                             ::grant/price            "R$ 3.42"
+                             ::grant/cliff            "P1Y" ;; 1 year
                              ::grant/issued-by        "Example Inc."
                              ::grant/underlying-asset "EXPL"}
     ::period/number         "1"
@@ -29,7 +29,7 @@ echo \#+END_EXAMPLE
     ::period/options-vested 5000}
 
    {::period/grant          {::grant/id               "PL-1337"
-                             ::grant/price            "R$ 1.5608"
+                             ::grant/price            "R$ 3.42"
                              ::grant/cliff            "P1Y"
                              ::grant/issued-by        "Example Inc."
                              ::grant/underlying-asset "EXPL"}
@@ -46,7 +46,9 @@ echo \#+END_EXAMPLE
 #+END_EXAMPLE
 
 #+BEGIN_SRC bash :var example_code=example-code :results verbatim :exports both
-echo $example_code | bb --classpath "$(clojure -A:examples -Spath)" --file /dev/stdin
+bb --classpath "$(clojure -A:examples -Spath)" --file /dev/stdin <<EOF
+$example_code
+EOF
 #+END_SRC
 
 #+NAME: example-ledger
@@ -60,23 +62,26 @@ echo $example_code | bb --classpath "$(clojure -A:examples -Spath)" --file /dev/
 
 2017-12-15 * (PL-1337/1) Example Inc.
   (Off-Balance:Unvested Options:PL-1337)  EXPL -5000
-  Assets:Options  5000 "PL-1337" {R$ 1.5608}
-  Income  -5000 "PL-1337" {R$ 1.5608}
-  [Unrealized:Equity:Capital Requirement]  5000 "PL-1337" @ R$ 1.5608
-  [Unrealized:Liabilities:Exercise Provision]  -5000 "PL-1337" @ R$ 1.5608
+  Assets:Options  5000 "PL-1337" {R$ 3.42}
+  Income  -5000 "PL-1337" {R$ 3.42}
+  [Unrealized:Equity:Capital Requirement]  5000 "PL-1337" @ R$ 3.42
+  [Unrealized:Liabilities:Exercise Provision]  -5000 "PL-1337" @ R$ 3.42
   [Unrealized:Assets:PL-1337]  EXPL 5000
   [Equity:Capital Gains Provision:PL-1337]  EXPL -5000
 
 2017-12-17 * (PL-1337/2) Example Inc.
   (Off-Balance:Unvested Options:PL-1337)  EXPL -25
-  Assets:Options  25 "PL-1337" {R$ 1.5608}
-  Income  -25 "PL-1337" {R$ 1.5608}
-  [Unrealized:Equity:Capital Requirement]  25 "PL-1337" @ R$ 1.5608
-  [Unrealized:Liabilities:Exercise Provision]  -25 "PL-1337" @ R$ 1.5608
+  Assets:Options  25 "PL-1337" {R$ 3.42}
+  Income  -25 "PL-1337" {R$ 3.42}
+  [Unrealized:Equity:Capital Requirement]  25 "PL-1337" @ R$ 3.42
+  [Unrealized:Liabilities:Exercise Provision]  -25 "PL-1337" @ R$ 3.42
   [Unrealized:Assets:PL-1337]  EXPL 25
   [Equity:Capital Gains Provision:PL-1337]  EXPL -25
 
 #+end_example
+
+#+NAME: example-ledger
+#+RESULTS:
 
 #+BEGIN_SRC bash :var example_ledger=example-ledger :results verbatim :exports both
 ledger --file - balance <<EOF
