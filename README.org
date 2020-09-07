@@ -54,7 +54,7 @@ echo \#+END_EXAMPLE
     println)
 #+END_EXAMPLE
 
-When we pipe this code into [[https://github.com/borkdude/babashka][babashka]] and get a plain text accounting journal.
+We pipe this code into [[https://github.com/borkdude/babashka][babashka]] and get a plain text accounting journal.
 
 #+BEGIN_SRC bash :var example_code=example-code :results verbatim :exports both
 bb --classpath "$(clojure -A:examples -Spath)" --file /dev/stdin <<EOF
@@ -91,7 +91,7 @@ EOF
 
 #+end_example
 
-With the ledger at hand, we can do arbitrary queries using ledger. 
+With the journal at hand we can do arbitrary queries using ledger.
 Below, we query a simple balance sheet.
 
 #+BEGIN_SRC bash :var example_ledger=example-ledger :results verbatim :exports both
