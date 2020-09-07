@@ -92,26 +92,32 @@ EOF
 #+end_example
 
 With the journal at hand we can do arbitrary queries using ledger.
-Below, we query a simple balance sheet.
+Below, we first add a stock valuation to the journal of $ 100.
+Then, we query the balance sheet and express the total value of the underlying stock in U.S. Dollar.
 
 #+BEGIN_SRC bash :var example_ledger=example-ledger :results verbatim :exports both
-ledger --file - balance <<EOF
+ledger --file - balance --exchange $ <<EOF
 $example_ledger
+
+commodity $
+  format $ 1,000.00
+
+P 2020-09-07 EXPL $ 100
 EOF
 #+END_SRC
 
 #+RESULTS:
 #+begin_example
         5025 PL-1337  Assets:Options
-          EXPL -5025  Equity:Capital Gains Provision:PL-1337
+       $ -502,500.00  Equity:Capital Gains Provision:PL-1337
        -5025 PL-1337  Income
-           EXPL 5025  Off-Balance:Unexercised Options:PL-1337
-           EXPL 5025  Unrealized
-           EXPL 5025    Assets:PL-1337
+        $ 502,500.00  Off-Balance:Unexercised Options:PL-1337
+        $ 502,500.00  Unrealized
+        $ 502,500.00    Assets:PL-1337
         5025 PL-1337    Equity:Capital Requirement
        -5025 PL-1337    Liabilities:Exercise Provision
 --------------------
-           EXPL 5025
+        $ 502,500.00
 #+end_example
 
 Now, try a register query, check lot prices, include this journal into other journals, add valuations through price DBs, and exchange the unrealized gains to fiat currencies.
