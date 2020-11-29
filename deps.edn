@@ -1,6 +1,5 @@
 {:deps    {org.clojure/clojure       {:mvn/version "1.10.1"}
-           com.clojournal/clojournal {:git/url "https://github.com/clojournal/clojournal"
-                                      :sha     "f73aa9119674054abff18801cc43736ca7990a34"}}
+           com.clojournal/clojournal {:mvn/version "0.1.0-alpha3"}}
 
  :aliases {:test     {:extra-deps  {lambdaisland/kaocha {:mvn/version "1.0.672"}}
                       :extra-paths ["test"]}
