@@ -29,6 +29,7 @@
                                          ::clojournal/amount  "EXPL 5000"}
                                         ;; FIXME: this is to prevent a bug in ledger CLI where, when using `print`,
                                         ;; it omits the amount of the second virtual transaction above
+                                        ;; Reported: https://github.com/ledger/ledger/issues/1974
                                         {::clojournal/account "Bugbuster:One"
                                          ::clojournal/amount  "1"}
                                         {::clojournal/account "Bugbuster:Two"}]}
