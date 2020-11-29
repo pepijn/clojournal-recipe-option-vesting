@@ -26,7 +26,12 @@
                                          ::clojournal/amount  "EXPL 5000"}
                                         {::clojournal/account "Off-Balance:Unexercised Options:PL-1337"
                                          ::clojournal/virtual ::virtual/unbalanced
-                                         ::clojournal/amount  "EXPL 5000"}]}
+                                         ::clojournal/amount  "EXPL 5000"}
+                                        ;; FIXME: this is to prevent a bug in ledger CLI where, when using `print`,
+                                        ;; it omits the amount of the second virtual transaction above
+                                        {::clojournal/account "Bugbuster:One"
+                                         ::clojournal/amount  "1"}
+                                        {::clojournal/account "Bugbuster:Two"}]}
           {::clojournal/date           "2017-12-15"
            ::clojournal/payee          "Example Inc."
            ::clojournal/status         ::clojournal/cleared

@@ -32,7 +32,12 @@
                                    ::clojournal/amount  (format "%s %s" underlying-asset size)}
                                   {::clojournal/account (format "Off-Balance:Unexercised Options:%s" id)
                                    ::clojournal/virtual ::virtual/unbalanced
-                                   ::clojournal/amount  (format "%s %s" underlying-asset size)}]}))
+                                   ::clojournal/amount  (format "%s %s" underlying-asset size)}
+                                  ;; FIXME: this is to prevent a bug in ledger CLI where, when using `print`,
+                                  ;; it omits the amount of the second virtual transaction above
+                                  {::clojournal/account "Bugbuster:One"
+                                   ::clojournal/amount  "1"}
+                                  {::clojournal/account "Bugbuster:Two"}]}))
 
 (defn- periods->grant-transactions
   [xs]
@@ -85,7 +90,12 @@
          (concat (periods->grant-transactions periods))
          (sort-by (juxt ::clojournal/date ::clojournal/account)))))
 
-(defn -main [in out]
+(defn -main
   "Utility main method to make direct invocation through babashka possible. This is useful if you want to pipe into
   ledger CLI directly."
+  [in out]
   (spit out (c.api/journal (vesting-schedule->journal (edn/read-string (slurp in))))))
+
+(comment
+
+  )
